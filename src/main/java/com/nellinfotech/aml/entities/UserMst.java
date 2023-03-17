@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,7 +23,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "USER_MASTER")
+@Table(name = "USER_MASTER",uniqueConstraints = { @UniqueConstraint(columnNames = {"user_id"}),@UniqueConstraint(columnNames = {"bank_code"})})
 public class UserMst extends BaseEntity {
     
     private static final long serialVersionUID = -8982457617782336330L;

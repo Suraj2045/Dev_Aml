@@ -2,6 +2,7 @@ package com.nellinfotech.aml.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-@Table(name = "BRANCH_MASTER")
+@Table(name = "BRANCH_MASTER",uniqueConstraints = @UniqueConstraint(columnNames = "branchCode"))
 public class BranchMst extends BaseEntity {
     
     /**
