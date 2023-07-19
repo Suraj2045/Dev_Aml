@@ -39,7 +39,7 @@ public interface AlertRepository extends JpaRepository<Alert, Long>{
 	@Query(value = " SELECT * FROM alert WHERE bank_code =:bankCode group by alert_status", nativeQuery = true)
 	List<Alert> getAlertStatusbyGroup(String bankCode);
 	
-	@Query(value = " SELECT * FROM alert WHERE bank_code =:bankCode group by alert_code", nativeQuery = true)
+	@Query(value = " SELECT * FROM alert WHERE bank_code =:bankCode", nativeQuery = true)
 	List<Alert> getAlertNamebyGroup(String bankCode);
 
 	@Query(value = " SELECT * FROM alert WHERE bank_code =:bankCode and (created_date BETWEEN :fromDate and :toDate) and alert_code=:alertType and alert_status=:alertStatus", nativeQuery = true)

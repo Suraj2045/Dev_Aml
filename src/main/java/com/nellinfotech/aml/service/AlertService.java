@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
@@ -22,7 +24,7 @@ public interface AlertService {
 
 	List<Alert> searchAlert(Header header, Alert alert);
 	List<Alert> getAlertStatastics(String bankCode, String interval);
-	List<Alert> getAlertClassification(String bankCode, String interval);
+	//List<Alert> getAlertClassification(String bankCode, String interval);
 	List<Alert> getAlertStatus(String bankCode, String toDate, String fromDate, String alertType, String alertStatus);
 	List<AlertTransaction> getAlertViolationStatistics(String bankCode, String toDate, String fromDate);
 	List<Alert> getChannelWiseAlert(String bankCode, String toDate, String fromDate);
@@ -41,4 +43,5 @@ public interface AlertService {
 	List<BranchRisk> branchRiskMonitor(String bankCode, String alertCode, String alertSubTypeCode, String timeDiff);
 	ResponseEntity<Map<String, Object>> riskHeatMap(String bankCode, String alertCode, String timeDiff);
 	ResponseEntity<Map<String, Object>> senarioSimulation(String bankCode, Date date1, Date date2, Long ruleId);
+	Page<Alert> getAlertClassification(String bankCode, String interval, Pageable pageable);
 }

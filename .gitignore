@@ -143,3 +143,10 @@ amlviews/target/amlviews-0.0.1-SNAPSHOT/WEB-INF/lib/spring-tx-5.2.6.RELEASE.jar
 amlviews/target/amlviews-0.0.1-SNAPSHOT/WEB-INF/lib/stax-ex-1.8.jar
 amlviews/target/amlviews-0.0.1-SNAPSHOT/WEB-INF/lib/txw2-2.3.1.jar
 amlviews/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+target/**/
+
+
+# IDE files
+.project
+.classpath
+.settings/

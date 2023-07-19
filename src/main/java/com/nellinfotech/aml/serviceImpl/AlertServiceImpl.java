@@ -12,17 +12,17 @@ import org.apache.commons.collections4.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Service;
 
-import com.nellinfotech.aml.commonUtility.HeaderValidator;
 import com.nellinfotech.aml.constant.ResponseStatus;
-import com.nellinfotech.aml.controller.BankController;
 import com.nellinfotech.aml.dto.AlertMonitorGraph;
 import com.nellinfotech.aml.dto.AlertPerformance;
 import com.nellinfotech.aml.dto.AlertResponse;
@@ -150,7 +150,7 @@ public class AlertServiceImpl implements AlertService {
 	}
 
 	@Override
-	public List<Alert> getAlertClassification(String bankCode, String interval) {
+	public Page<Alert> getAlertClassification(String bankCode, String interval, Pageable pageable) {
 		double count = 0.00;
 		double vrvCount = 0.00;
 		double sdnCount = 0.00;
@@ -207,6 +207,7 @@ public class AlertServiceImpl implements AlertService {
 
 			alertGroup=alertRepository.getAlertNamebyGroup(bankCode);
 			
+			  long alertGroupSize = alertGroup.size();
 			for (int j = 0; j < alertGroup.size(); j++) {
 				if (alertGroup.get(j).getAlertCode().equals("VRV")) {
 					vrvCountPercent = vrvCount * 100 / alertSize;
@@ -229,8 +230,15 @@ public class AlertServiceImpl implements AlertService {
 					alertGroup.get(j).setAlertPercent(manualCountPercent);
 				}
 			}
+			int startIndex = (int) pageable.getOffset();
+			int endIndex = Math.min((startIndex + pageable.getPageSize()), alertGroup.size());
 
-			return alertGroup;
+			// Create a sublist of the original List<Alert> based on the Pageable
+			List<Alert> sublist = alertGroup.subList(startIndex, endIndex);
+
+			// Create a Page<Alert> using the sublist and Pageable
+			Page<Alert> alertPage = new PageImpl<>(sublist, pageable, alertGroup.size());
+			return alertPage;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

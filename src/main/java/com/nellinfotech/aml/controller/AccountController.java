@@ -25,7 +25,6 @@ import com.nellinfotech.aml.service.AccountService;
 @CrossOrigin(origins = "*")
 @RestController
 public class AccountController {
-    
     @Autowired
     private AccountService accountService;
     
